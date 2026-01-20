@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPC Ravens | Pride . Spirit . Excellence</title>
+    <style>
+        :root {
+            --primary-dark: #1B5E20;
+            --raven-green: #4CAF50;
+            --highlight: #81C784;
+            --white: #FFFFFF;
+            --black: #0D0D0D;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #121212; color: var(--white); overflow-x: hidden; }
+
+        nav {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 15px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+        .logo img { height: 45px; cursor: pointer; }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav ul li a { 
+            color: #ccc; 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            text-transform: uppercase; 
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        nav ul li a:hover, nav ul li a.active { color: var(--raven-green); font-weight: bold; }
+
+        .page {
+            display: none; 
+            padding: 120px 10% 60px;
+            min-height: 100vh;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .page.active { display: block; }
+        #home-page.active { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-size: 2.5rem; color: var(--raven-green); margin-bottom: 30px; border-left: 6px solid var(--primary-dark); padding-left: 15px; }
+
+        .about-content { max-width: 900px; margin-bottom: 50px; }
+        .about-content h3 { color: var(--highlight); margin-bottom: 15px; font-size: 1.5rem; }
+        .about-content p { line-height: 1.8; color: #ccc; margin-bottom: 20px; }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .value-card {
+            background: #1a1a1a;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            border-bottom: 4px solid var(--raven-green);
+            transition: 0.3s;
+        }
+        .value-card:hover { transform: translateY(-10px); background: #222; }
+        .value-card span { font-size: 3rem; display: block; margin-bottom: 15px; }
+        .value-card h4 { color: var(--raven-green); margin-bottom: 10px; text-transform: uppercase; }
+
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 15px; 
+        }
+        .gallery-item { 
+            aspect-ratio: 1/1; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            cursor: pointer;
+            border: 1px solid #333;
+        }
+        .gallery-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: 0.5s ease; 
+        }
+        .gallery-item:hover img { transform: scale(1.1); filter: brightness(0.6); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: #1a1a1a; border-radius: 8px; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
+        .card:hover { border-color: var(--raven-green); transform: translateY(-5px); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-content { padding: 20px; }
+
+        #lightbox {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center;
+        }
+        #lightbox img { max-width: 90%; max-height: 80%; border: 2px solid var(--raven-green); border-radius: 4px; }
+        .close-btn { position: absolute; top: 20px; right: 40px; font-size: 50px; color: white; cursor: pointer; }
+
+        footer { background: var(--black); padding: 40px 10%; border-top: 2px solid var(--primary-dark); text-align: center; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <img src="img/spclogo-removebg-preview (2).png" alt="Logo" onclick="showPage('home-page')">
+        </div>
+        <ul>
+            <li><a onclick="showPage('home-page')" id="link-home" class="nav-link active">Home</a></li>
+            <li><a onclick="showPage('about-page')" id="link-about" class="nav-link">About</a></li>
+            <li><a onclick="showPage('teams-page')" id="link-teams" class="nav-link">Teams</a></li>
+            <li><a onclick="showPage('gallery-page')" id="link-gallery" class="nav-link">Gallery</a></li>
+        </ul>
+    </nav>
+
+    <div id="home-page" class="page active">
+        <img src="img/SPC_RAVENS-removebg-preview (1).png" alt="SPC Ravens" class="big-logo" style="width: 100%; max-width: 500px; filter: drop-shadow(0 0 20px rgba(76,175,80,0.3));">
+        <p style="letter-spacing: 5px; text-transform: uppercase; margin-top: 20px; font-weight: bold;">Pride . Spirit . Excellence</p>
+    </div>
+
+    <div id="about-page" class="page">
+        <h2>About SPC Ravens</h2>
+        <div class="about-content">
+            <h3>Home of Champions. Legacy of Excellence.</h3>
+            <p>The SPC Ravens Sports Team is the official athletic powerhouse of San Pablo Colleges, embodying the spirit of dedication, teamwork, and excellence in sports. Competing in prestigious leagues and tournaments, the Ravens have built a legacy of resilience and victory, bringing pride to the SPC community.</p>
+            <p>With a strong commitment to athletic and academic excellence, our student-athletes train to push their limits, guided by top-tier coaches and a supportive sports community. From the roaring basketball courts to the dynamic volleyball matches, the SPC Ravens continue to elevate the game.</p>
+        </div>
+
+        <div class="values-grid">
+            <div class="value-card"><span>🏆</span><h4>Excellence</h4><p>We strive for the highest standards in every game and every classroom.</p></div>
+            <div class="value-card"><span>🤝</span><h4>Teamwork</h4><p>Unity is our greatest strength; we win together and learn together.</p></div>
+            <div class="value-card"><span>🔥</span><h4>Spirit</h4><p>The Raven heart never quits, fueled by passion and school pride.</p></div>
+        </div>
+    </div>
+
+    <div id="teams-page" class="page">
+        <h2>Our Teams</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="img/spcmensbballpic.jpg" alt="Basketball">
+                <div class="card-content"><h3>Raven Basketball</h3><p>Legacy of dominance on the court.</p></div>
+            </div>
+            <div class="card">
+                <img src="img/spcmensvolleyball.jpg" alt="Volleyball">
+                <div class="card-content"><h3>Raven Volleyball</h3><p>Power and teamwork at the net.</p></div>
+            </div>
+            <div class="card">
+                <img src="img/taekwondo team.jpg" alt="Taekwondo">
+                <div class="card-content"><h3>Raven Taekwondo</h3><p>Discipline and championship medals.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gallery-page" class="page">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item" onclick="openLightbox('img/champions.jpg')"><img src="img/champions.jpg" alt="Photo 1"></div>
+            <div class="gallery-item" onclick="openLightbox('img/spc-womens.jpg')"><img src="img/spc-womens.jpg" alt="Photo 2"></div>
+            <div class="gallery-item" onclick="openLightbox('img/taekwondo2.jpg')"><img src="img/taekwondo2.jpg" alt="Photo 3"></div>
+            <div class="gallery-item" onclick="openLightbox('img/gallery1.jpg')"><img src="img/gallery1.jpg" alt="Photo 4"></div>
+            <div class="gallery-item" onclick="openLightbox('img/gallery2.jpg')"><img src="img/gallery2.jpg" alt="Photo 5"></div>
+            <div class="gallery-item" onclick="openLightbox('img/gallery3.jpg')"><img src="img/gallery3.jpg" alt="Photo 6"></div>
+            <div class="gallery-item" onclick="openLightbox('img/gallery4.jpg')"><img src="img/gallery4.jpg" alt="Photo 7"></div>
+            <div class="gallery-item" onclick="openLightbox('img/gallery5.jpg')"><img src="img/gallery5.jpg" alt="Photo 8"></div>
+            <div class="gallery-item" onclick="openLightbox('img/gallery6.jpg')"><img src="img/gallery6.jpg" alt="Photo 9"></div>
+            <div class="gallery-item" onclick="openLightbox('img/gallery7.jpg')"><img src="img/gallery7.jpg" alt="Photo 10"></div>
+        </div>
+    </div>
+
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <img id="lightbox-img" src="">
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('active'));
+            
+            const cleanId = pageId.replace('-page', '');
+            const activeLink = document.getElementById('link-' + cleanId);
+            if(activeLink) activeLink.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        function openLightbox(src) {
+            document.getElementById('lightbox').style.display = 'flex';
+            document.getElementById('lightbox-img').src = src;
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
